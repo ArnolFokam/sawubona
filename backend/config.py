@@ -1,11 +1,10 @@
+import os
 from functools import lru_cache
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    SQL_DATABASE_URL: str
-    
-    model_config = SettingsConfigDict(env_file=".env.development")
+    SQL_DATABASE_URL:  str = os.getenv("SQL_DATABASE_URL", "sqlite:///./test.db")
 
 
 @lru_cache
