@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { renderToString } from 'react-dom/server';
 
-import App from "@/frontend/App";
+import App from "@/app/App";
 
 const router = Router();
 

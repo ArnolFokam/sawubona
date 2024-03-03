@@ -7,7 +7,7 @@ export default function App() {
                 <title>My app</title>
             </head>
             <body>
-                Hellow World
+                Hello from React App
             </body>
         </html>
     );
