@@ -1,18 +1,25 @@
 import dotenv from "dotenv";
+dotenv.config();
+
 import express, { Express, Request, Response } from "express";
 import { renderToString } from "react-dom/server";
 import react from "react";
 
-import APIV1Routes from "@/api/v1";
+import apiRoutes from "@/routes";
 import App from "@/client/components/App";
+import connectDB from "@/db";
 
 dotenv.config();
 
 const app: Express = express();
+
+connectDB();
+
 app.use('/static', express.static(__dirname + "/static/")); // serve static files
 
-// setup routes
-app.use('/api/v1', APIV1Routes); // api endpoints
+app.use(express.json());
+
+app.use('/api/v1', apiRoutes); 
 app.use('/', (req: Request, res: Response) => {
     const renderedApp = renderToString(react.createElement(App));
     res.send(`
@@ -28,7 +35,7 @@ app.use('/', (req: Request, res: Response) => {
             </body>
         </html>
     `);
-}); // app-ui endpoints
+});
 
 
 const port = process.env.PORT || 3000;
