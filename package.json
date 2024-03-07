@@ -5,12 +5,16 @@
   "main": "src/server.ts",
   "scripts": {
     "clean": "rm -rf ./build",
-    "build:client": "webpack --config webpack.client.config.ts",
     "build:server": "webpack --config webpack.server.config.ts",
-    "build": "npm run clean && npm run build:client && npm run build:server",
-    "start": "nodemon src/server.ts"
+    "build:client:welcome": "webpack --config webpack.client.welcome.config.ts",
+    "build:client:dashboard": "webpack --config webpack.client.dashboard.config.ts",
+    "start": "nodemon"
   },
-  "keywords": ["machine-learning", "experiment-tracker", "data-science"],
+  "keywords": [
+    "machine-learning",
+    "experiment-tracker",
+    "data-science"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -19,7 +23,8 @@
     "express": "^4.18.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.1",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.3"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

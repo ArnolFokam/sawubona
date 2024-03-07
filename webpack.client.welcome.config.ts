@@ -4,7 +4,7 @@ module.exports = [
     {
         target: 'web',
         mode: 'development',
-        entry: './src/client/index.tsx',
+        entry: './src/client/welcome.tsx',
         devtool: 'inline-source-map',
         module: {
             rules: [
@@ -30,7 +30,7 @@ module.exports = [
         },
         output: {
             filename: 'client.js',
-            path: path.resolve(__dirname, 'build/static'),
+            path: path.resolve(__dirname, 'build/welcome'),
         },
     },
 ]
