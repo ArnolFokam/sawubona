@@ -7,11 +7,10 @@ import User from '@/models/User';
 
 // Register a new user
 const register = async (req: Request, res: Response, next: NextFunction) => {
-    const { username, email, password } = req.body;
+    const { email, password } = req.body;
 
     try {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new User({ username, email, password: hashedPassword });
+        const user = new User({ email, password });
         await user.save();
         res.json({ message: 'Registration successful' });
     } catch (error) {
@@ -21,21 +20,20 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
 
 // Login with an existing user
 const login = async (req: Request, res: Response, next: NextFunction) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     try {
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ email });
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-
         const passwordMatch = await user.comparePassword(password);
         if (!passwordMatch) {
             return res.status(401).json({ message: 'Incorrect password' });
         }
 
         const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY as string, {
-            expiresIn: '1 hour'
+            expiresIn: '4 weeks'
         });
         res.json({ token });
     } catch (error) {

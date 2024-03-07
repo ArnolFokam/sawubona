@@ -5,8 +5,9 @@ import express, { Express, Request, Response } from "express";
 import { renderToString } from "react-dom/server";
 import react from "react";
 
-import apiRoutes from "@/routes";
+import apiRoutes from "@/routes/api/v1";
 import App from "@/client/components/App";
+import { authenticate } from "@/middlewares/auth";
 import connectDB from "@/db";
 
 dotenv.config();
@@ -20,7 +21,15 @@ app.use('/static', express.static(__dirname + "/static/")); // serve static file
 app.use(express.json());
 
 app.use('/api/v1', apiRoutes); 
+
+// Dashboard App
+app.get('/dashboard', authenticate, (req: Request, res: Response) => {
+    res.json({ message: `Welcome ${req.user.email}` });
+});
+
+// Home Web App
 app.use('/', (req: Request, res: Response) => {
+    
     const renderedApp = renderToString(react.createElement(App));
     res.send(`
         <html>

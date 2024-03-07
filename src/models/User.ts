@@ -2,7 +2,6 @@ import { Schema, model } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 interface User extends Document {
-    username: string;
     email: string;
     password: string;
     comparePassword(password: string): Promise<boolean>;
@@ -10,11 +9,6 @@ interface User extends Document {
 
 const userSchema = new Schema<User>(
     {
-        username: {
-            type: String,
-            required: true,
-            unique: true
-        },
         email: {
             type: String,
             required: true,
@@ -32,10 +26,8 @@ const userSchema = new Schema<User>(
 userSchema.pre('save', async function (next) {
     const user = this;
     if (!user.isModified('password')) return next();
-
     try {
-        const salt = await bcrypt.genSalt();
-        user.password = await bcrypt.hash(user.password, salt);
+        user.password = await bcrypt.hash(user.password, 15);
         next();
     } catch (error: any) {
         return next(error);
