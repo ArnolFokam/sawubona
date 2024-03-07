@@ -2,17 +2,19 @@
   "name": "sawubona",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.ts",
+  "main": "src/server.ts",
   "scripts": {
     "clean": "rm -rf ./build",
-    "build": "npm run clean && webpack --config webpack.config.ts",
-    "start": " npm run clean && webpack --config webpack.config.ts --watch"
+    "build:client": "webpack --config webpack.client.config.ts",
+    "build:server": "webpack --config webpack.server.config.ts",
+    "build": "npm run clean && npm run build:client && npm run build:server",
+    "start": "nodemon src/server.ts"
   },
-  "keywords": [],
+  "keywords": ["machine-learning", "experiment-tracker", "data-science"],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "express": "^4.18.3",
     "jsonwebtoken": "^9.0.2",
@@ -20,22 +22,24 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.2",
+    "@types/bcryptjs": "^2.4.6",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.11.24",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
+    "@types/webpack-node-externals": "^3.0.4",
     "autoprefixer": "^10.4.18",
     "css-loader": "^6.10.0",
-    "nodemon-webpack-plugin": "^4.8.2",
     "postcss-loader": "^8.1.1",
     "style-loader": "^3.3.4",
     "tailwindcss": "^3.4.1",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.3.3",
     "webpack": "^5.90.3",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "webpack-node-externals": "^3.0.0"
   }
 }

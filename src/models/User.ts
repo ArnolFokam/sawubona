@@ -1,8 +1,14 @@
-import mongoose, { CallbackError } from 'mongoose';
-import bcrypt from 'bcrypt';
+import { Schema, model } from 'mongoose';
+import bcrypt from 'bcryptjs';
 
+interface User extends Document {
+    username: string;
+    email: string;
+    password: string;
+    comparePassword(password: string): Promise<boolean>;
+}
 
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema<User>(
     {
         username: {
             type: String,
@@ -18,11 +24,6 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        role: {
-            type: String,
-            enum: ['user', 'admin'],
-            default: 'user'
-        }
     },
     { timestamps: true }
 );
@@ -45,4 +46,4 @@ userSchema.methods.comparePassword = async function (password: string) {
     return bcrypt.compare(password, this.password);
 };
 
-export default mongoose.model('User', userSchema);
+export default model<User>('User', userSchema);
