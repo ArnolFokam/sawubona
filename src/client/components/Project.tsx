@@ -38,6 +38,7 @@ const Project = ({ token }: { token: string }) => {
         <>
           <h2>{project.name}</h2>
           <ProjectSidebar projectId={project._id} token={token} />
+          <>HERE</>
         </>
       ) : (
         <p>Project not found.</p>

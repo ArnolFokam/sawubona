@@ -5,6 +5,7 @@ const projectSchema = new Schema({
         type: String,
         required: true,
         trim: true,
+        unique: true,
     },
     owner: {
         type: Schema.Types.ObjectId,

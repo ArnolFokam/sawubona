@@ -1,10 +1,20 @@
+/**
+ * Controller functions for user authentication.
+ */
+
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 import User from '@/models/User';
 
-
-// Register a new user
+/**
+ * Register a new user.
+ * 
+ * @param req - The Express request object.
+ * @param res - The Express response object.
+ * @param next - The Express next function.
+ * @returns A JSON response indicating the success of the registration.
+ */
 const register = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
 
@@ -17,7 +27,14 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
-// Login with an existing user
+/**
+ * Login with an existing user.
+ * 
+ * @param req - The Express request object.
+ * @param res - The Express response object.
+ * @param next - The Express next function.
+ * @returns A JSON response containing a JWT token for the authenticated user.
+ */
 const login = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
 
