@@ -1,4 +1,5 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 
 import Login from '@/client/components/Login';
 import Register from '@/client/components/Register';
@@ -22,7 +23,6 @@ const Welcome = () => {
             />
         </Routes>;
     } else {
-        console.log("redirect", token);
         window.location.replace('/dashboard');
     }
 };
