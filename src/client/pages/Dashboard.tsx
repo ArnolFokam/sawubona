@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
-
-import Login from '@/client/components/Login';
 import useToken from '@/client/components/useToken';
 
 const Dashboard = () => {
-    const [userToken, setUserToken] = useToken();
-    
-    if(!userToken) {
-        return <Login setToken={setUserToken} />
+    const [token, _, removeToken] = useToken();
+
+    if (token) {
+        return <>
+        <h1>Dashboard</h1>
+        <button onClick={removeToken}>Logout</button>
+        </>;
+    } else {
+        window.location.replace('/');
     }
 
-    return <>Dashboard</>;
+
 };
 
 export default Dashboard;
