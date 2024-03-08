@@ -1,11 +1,11 @@
 import { Router } from 'express';
 
-import { delete_current_user } from '@/controllers/users';
-import { authenticateToken } from '@/middlewares/auth'; // Import the missing 'authenticate' function
+import { delete_current_user, get_current_user } from '@/controllers/users';
 
 
 const router = Router();
 
-router.delete('/me', authenticateToken, delete_current_user);
+router.get('/', get_current_user);
+router.delete('/', delete_current_user);
 
 export default router;

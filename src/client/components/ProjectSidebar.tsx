@@ -50,9 +50,9 @@ const ProjectSidebar = ({ projectId, token }: { projectId: string; token: string
           {runs.map((run) => (
             <li key={run._id}>
               {/* Wrap run name with Link component */}
-              <Link to={`/projects/${projectId}/runs/${run._id}`} className="text-blue-500 hover:underline">
+              <p className="text-blue-500 hover:underline">
                 {run.name}
-              </Link>
+              </p>
             </li>
           ))}
         </ul>

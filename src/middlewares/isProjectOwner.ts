@@ -15,7 +15,8 @@ const isProjectOwner = async (req: Request, res: Response, next: NextFunction) =
       if (!project.owner.equals(userId)) { // Compare project owner ID with authenticated user ID
         return res.status(403).json({ message: 'Unauthorized access. You are not the owner of this project.' });
       }
-  
+
+      req.project = project;
       next(); // Proceed if user is the owner
     } catch (error) {
       console.error(error);

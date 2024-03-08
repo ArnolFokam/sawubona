@@ -31,19 +31,7 @@ const create_project = async (req: Request, res: Response, next: NextFunction) =
  */
 const delete_project = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const projectId = req.params.projectId;
-
-        // Check if project exists (optional, but recommended)
-        const project = await Project.findById(projectId);
-        if (!project) {
-            return res.status(404).json({ message: 'Project not found' });
-        }
-
-        // Implement authorization check for project ownership (optional)
-        // You can check if the logged-in user ID matches the project's owner ID
-
-        await Project.findByIdAndDelete(projectId);
-
+        await Project.findByIdAndDelete(req.project._id);
         res.json({ message: 'Project deleted successfully' });
     } catch (error) {
         console.error(error);
@@ -76,7 +64,7 @@ const get_all_projects = async (req: Request, res: Response, next: NextFunction)
  * @param res - The response object.
  * @param next - The next function.
  */
-const get_project_by_id = async (req: Request, res: Response, next: NextFunction) => {
+const get_project = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const projectId = req.params.projectId;
         const project = await Project.findById(projectId);
@@ -90,24 +78,5 @@ const get_project_by_id = async (req: Request, res: Response, next: NextFunction
     }
 };
 
-/**
- * Gets a project by name.
- * @param req - The request object.
- * @param res - The response object.
- * @param next - The next function.
- */
-const get_project_by_name = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const projectName = req.params.projectName;
-        const project = await Project.findOne({ name: projectName });
-        if (!project) {
-            return res.status(404).json({ message: 'Project not found' });
-        }
-        res.json(project);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
-    }
-};
 
-export { create_project, delete_project, get_all_projects, get_project_by_id, get_project_by_name };
+export { create_project, delete_project, get_all_projects, get_project };

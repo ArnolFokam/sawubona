@@ -32,18 +32,18 @@ const authenticateApiKey = async (req: Request, res: Response, next: NextFunctio
         return res.status(401).json({ message: 'Missing API key' });
     }
 
-    User.findOne({ apiKey })
-        .then(user => {
-            if (!user) {
-                return res.status(401).json({ message: 'Invalid API key' });
+    if (apiKey) {
+        try {
+            const user = await User.findOne({ apiKey });
+            if (user) {
+                req.user = user;
+                return next();
             }
-            req.user = user; // Attach the user object to the request for further use
-            next();
-        })
-        .catch(error => {
+        } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Internal server error' }); // Generic error for security
-        });
+        }
+    }
 }
 
 const authenticate = async (req: Request, res: Response, next: NextFunction) => {
@@ -55,7 +55,7 @@ const authenticate = async (req: Request, res: Response, next: NextFunction) => 
         const token = authHeader.split(' ')[1];
         try {
             const { userId } = jwt.verify(token, process.env.SECRET_KEY as string) as JwtPayload;
-            const user = User.findById(userId);
+            const user = await User.findById(userId);
             if (user) {
                 req.user = user;
                 return next();
@@ -67,18 +67,16 @@ const authenticate = async (req: Request, res: Response, next: NextFunction) => 
 
     // Fallback to API key authentication
     if (apiKey) {
-        return User.findOne({ apiKey })
-            .then(user => {
-                if (user) {
-                    req.user = user;
-                    return next();
-                }
-                return res.status(401).json({ message: 'Invalid API key' });
-            })
-            .catch(error => {
-                console.error(error);
-                return res.status(500).json({ message: 'Internal server error' });
-            });
+        try {
+            const user = await User.findOne({ apiKey });
+            if (user) {
+                req.user = user;
+                return next();
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Internal server error' }); // Generic error for security
+        }
     }
 };
 
