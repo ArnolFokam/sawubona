@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 
 import useToken from '@/client/components/useToken';
+import ProjectList from '@/client/components/ProjectList';
+import Project from '@/client/components/Project';
 
 async function deleteAccount(token: string) {
     try {
@@ -30,7 +33,7 @@ const Dashboard = () => {
     const handleDeleteAccount = async () => {
         if (window.confirm('Are you sure you want to delete your account? This action is irreversible.')) {
             try {
-                
+
                 const _ = await deleteAccount(token);
 
                 // Handle successful deletion (e.g., remove token, redirect to login)
@@ -85,6 +88,10 @@ const Dashboard = () => {
                     </div>
                 </div>
             )}
+            <Routes>
+                <Route path="/dashboard" element={<ProjectList token={token} />} />  {/* List all projects */}
+                <Route path="/dashboard/projects/:projectId" element={<Project token={token} />} /> {/* Individual project details */}
+            </Routes>
         </>
         );
     } else {
