@@ -47,24 +47,33 @@ const ProjectSidebar = ({
   }, [projectId, token]); // Re-fetch runs on project ID or token change
 
   return (
-    <div className="w-64 bg-gray-800 text-white px-4 py-4 h-screen">
-      <h2 className="py-4 px-4 text-2xl font-bold text-center">{projectName}</h2>
-      {isLoading ? (
-        <p className="text-center">Loading runs...</p>
-      ) : error ? (
-        <p className="text-center">{error}</p>
-      ) : (
-        <ul className="space-y-2">
-          {runs.map((run) => (
-            <li
-              className="py-8 px-4 text-center"
-              key={run._id}
-            >
-              {run.name}
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="flex flex-col w-64 bg-gray-800 text-white px-4 py-4 h-full">
+      <h2 className="grow-0 py-4 px-4 text-2xl font-bold text-center">
+        {projectName}
+      </h2>
+      <div className="grow flex flex-col justify-between">
+        {isLoading ? (
+          <p className="text-center">Loading runs...</p>
+        ) : error ? (
+          <p className="text-center">{error}</p>
+        ) : runs.length > 0 ? (
+          <ul className="space-y-2">
+            {runs.map((run) => (
+              <li className="py-8 px-4 text-center" key={run._id}>
+                {run.name}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-center">No runs found.</p>
+        )}
+        <Link
+          className="py-6 text-center font-medium text-blue-600 dark:text-blue-500 hover:underline"
+          to="/dashboard"
+        >
+          👈 back to projects
+        </Link>
+      </div>
     </div>
   );
 };

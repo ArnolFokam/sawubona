@@ -28,19 +28,28 @@ const Project = ({ token }: { token: string }) => {
   }, [projectId]);
 
   return (
-    <div>
+    <>
       {project ? (
-        <>
-          <ProjectSidebar
-            projectId={project._id}
-            projectName={project.name}
-            token={token}
-          />
-        </>
+        <ProjectSidebar
+          projectId={project._id}
+          projectName={project.name}
+          token={token}
+        />
       ) : (
-        <p>Project not found.</p>
+        <>
+          <p className="text-center p-12">
+            Project not found. <br/>
+          <Link
+            className="py-6 text-center font-medium text-blue-600 dark:text-blue-500 hover:underline"
+            to="/dashboard"
+          >
+            👈 back to projects
+          </Link>
+          </p>
+          
+        </>
       )}
-    </div>
+    </>
   );
 };
 

@@ -98,10 +98,10 @@ const Dashboard = () => {
 
   if (token) {
     return (
-      <>
-        <header className="bg-gray-800 text-white flex justify-between items-center px-8 py-4">
+      <div className="flex flex-col h-screen">
+        <header className="grow-0 bg-white shadow-2xl text-gray-900 flex justify-between items-center px-8 py-6">
           <h1 className="text-2xl font-bold">Dashboard</h1>
-          {user && <p className="text-gray-300">{user.apiKey}</p>}
+          {user && <p className="text-black-300"><b>ApiKey:</b> {user.apiKey}</p>}
           <div className="flex items-center space-x-4">
             <button
               onClick={handleLogout}
@@ -143,16 +143,18 @@ const Dashboard = () => {
             </div>
           </div>
         )}
-        <Routes>
-          <Route path="/dashboard" element={<ProjectList token={token} />} />{" "}
-          {/* List all projects */}
-          <Route
-            path="/dashboard/projects/:projectId"
-            element={<Project token={token} />}
-          />{" "}
-          {/* Individual project details */}
-        </Routes>
-      </>
+        <div className="grow">
+          <Routes>
+            <Route path="/dashboard" element={<ProjectList token={token} />} />{" "}
+            {/* List all projects */}
+            <Route
+              path="/dashboard/projects/:projectId"
+              element={<Project token={token} />}
+            />{" "}
+            {/* Individual project details */}
+          </Routes>
+        </div>
+      </div>
     );
   } else {
     window.location.replace("/");
